@@ -59,3 +59,5 @@ touch ~/.bookmarks
 source ~/.bookmarks
 EOF
 fi
+
+source $HOME/.bash_aliases
