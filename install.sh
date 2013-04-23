@@ -15,17 +15,20 @@ fi
 curl https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
 
 if [ ! -e $HOME/.vim/bundle/vundle ]; then
+    echo "Installing Vundle"
+    echo "-----------------"
     git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 
     # auto-fetch the bundle
     vim +BundleInstall +qall
 fi
 
-#
-# Install Bash Aliases
-#
+
 if [ ! -e $HOME/.bash_aliases ]; then
-    cat << 'EOF' > "$HOME/.bash_aliases"
+    echo Install Bash Aliases
+    echo --------------------
+
+    cat << "EOF" > $HOME/.bash_aliases
 alias a='clear; cat ~/.bash_aliases'
 alias ea='vi ~/.bash_aliases; echo "Refreshing..."; source ~/.bash_aliases'
 alias r='source ~/.bash_aliases'
