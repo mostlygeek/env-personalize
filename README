@@ -1,2 +1,6 @@
 Quick / Dirty personalization of a shell env
 
+Installation:
+
+curl https://raw.github.com/mostlygeek/env-personalize/master/install.sh | sh
+
