@@ -81,6 +81,9 @@ set -g prefix C-a
 
 # Allow C-A a to send C-A to application like tmux/screen over ssh
 bind a send-prefix
+
+# no need to use the prefix, just use Ctrl+B
+bind-key -n C-b send-prefix
  
 # allow mouse navigation (on mac) between panes
 bind -n M-Left select-pane -L
