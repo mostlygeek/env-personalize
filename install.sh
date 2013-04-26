@@ -61,3 +61,57 @@ EOF
 fi
 
 source $HOME/.bash_aliases
+
+if [ ! -e $HOME/.tmux.conf ]; then
+
+    cat << "EOF" > $HOME/.tmux.conf
+# NOTE!! 
+#
+# to reload tmux w/out restarting, enter command mode and
+#
+# :source-file $HOME/.tmux.conf
+#
+
+# fix for broken pbcopy in tmux
+# see: http://superuser.com/questions/231130/unable-to-use-pbcopy-while-in-tmux-session
+set-option -g default-command "reattach-to-user-namespace -l bash"
+ 
+unbind C-b
+set -g prefix C-a
+
+# Allow C-A a to send C-A to application like tmux/screen over ssh
+bind a send-prefix
+ 
+# allow mouse navigation (on mac) between panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+ 
+# set status bar color
+set -g status-bg blue
+set -g status-fg white
+set-window-option -g window-status-current-bg red
+
+# make it easier to split window
+unbind %
+bind | split-window -h
+bind - split-window -v
+ 
+# set default colors
+set -g default-terminal "screen-256color"
+
+# Set vi mode
+# http://blog.sanctum.geek.nz/vi-mode-in-tmux/
+set-window-option -g mode-keys vi
+
+# Enable mouse scrolling
+set -g mode-mouse on
+#set -g mouse-resize-pane on
+set -g mouse-select-pane on
+#set -g mouse-select-window on
+
+# easier copy / pasting
+# src: http://stackoverflow.com/a/12634260
+bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
+EOF
