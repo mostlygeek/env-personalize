@@ -1,10 +1,16 @@
 #!/bin/sh
 
+cd $HOME
+
 # 
 # Install VIM
 #
 if [ ! -e $HOME/.vim/backup ]; then
     mkdir -p $HOME/.vim/backup
+fi
+
+if [ ! -e $HOME/.vim/bundle ]; then
+    mkdir -p $HOME/.vim/bundle
 fi
 
 if [ ! -e $HOME/.vim/tmp ]; then
