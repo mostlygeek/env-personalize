@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cd $HOME
+echo $HOME
 
 # 
 # Install VIM
@@ -17,8 +18,9 @@ if [ ! -e $HOME/.vim/tmp ]; then
     mkdir -p $HOME/.vim/tmp
 fi
 
-# just replace it every time
-curl https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
+echo "Replacing $HOME/.vimrc"
+echo "----------------------"
+curl -s https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
 
 if [ ! -e $HOME/.vim/bundle/vundle ]; then
     echo "Installing Vundle"
@@ -30,7 +32,8 @@ if [ ! -e $HOME/.vim/bundle/vundle ]; then
 fi
 
 
-if [ ! -e $HOME/.bash_aliases ]; then
+if [ ! -e $HOME/.bash_aliases ]
+then
     echo Install Bash Aliases
     echo --------------------
 
@@ -124,3 +127,4 @@ set -g mouse-select-pane on
 # src: http://stackoverflow.com/a/12634260
 bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
 EOF
+fi
