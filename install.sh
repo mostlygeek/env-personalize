@@ -1,7 +1,6 @@
 #!/bin/sh
 
 cd $HOME
-echo $HOME
 
 # 
 # Install VIM
@@ -71,6 +70,27 @@ fi
 
 source $HOME/.bash_aliases
 
+if [ $(grep "source ~/.bash_aliases" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+    echo "Adding sourcing of ~/.bash_aliases"
+    echo "----------------------------------"
+
+    cat << "EOF" >> $HOME/.bash_profile
+if [ -e ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+EOF
+fi
+
+if [ $(grep "EDITOR=vim" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+    echo "EDITOR=vim" >> $HOME/.bash_profile
+    echo "export EDITOR" >> $HOME/.bash_profile
+fi
+if [ $(grep "VISUAL=vim" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+    echo "VISUAL=vim" >> $HOME/.bash_profile
+    echo "export VISUAL" >> $HOME/.bash_profile
+fi
+
+
 if [ ! -e $HOME/.tmux.conf ]; then
 
     cat << "EOF" > $HOME/.tmux.conf
@@ -81,9 +101,6 @@ if [ ! -e $HOME/.tmux.conf ]; then
 # :source-file $HOME/.tmux.conf
 #
 
-# fix for broken pbcopy in tmux
-# see: http://superuser.com/questions/231130/unable-to-use-pbcopy-while-in-tmux-session
-set-option -g default-command "reattach-to-user-namespace -l bash"
  
 unbind C-b
 set -g prefix C-a
@@ -127,4 +144,17 @@ set -g mouse-select-pane on
 # src: http://stackoverflow.com/a/12634260
 bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
 EOF
+fi
+
+if [ $(uname -a | grep Darwin) ]; then 
+    if [ $(grep "reattach-to-user-namespace" $HOME/.tmux.conf | wc -l) -ne 0 ]; then
+        echo "Installing OSX TMUX pbcopy hacks"
+        echo "--------------------------------"
+
+        cat << "EOF" >> $HOME/.tmux.conf
+# fix for broken pbcopy in tmux
+# see: http://superuser.com/questions/231130/unable-to-use-pbcopy-while-in-tmux-session
+set-option -g default-command "reattach-to-user-namespace -l bash"
+EOF
+    fi
 fi
