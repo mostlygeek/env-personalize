@@ -140,9 +140,9 @@ set -g mode-mouse on
 set -g mouse-select-pane on
 #set -g mouse-select-window on
 
-# easier copy / pasting
+# easier copy / pasting, uncomment in OSX
 # src: http://stackoverflow.com/a/12634260
-bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
+# bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
 EOF
 fi
 
