@@ -100,7 +100,6 @@ if [ ! -e $HOME/.tmux.conf ]; then
 #
 # :source-file $HOME/.tmux.conf
 #
-
  
 unbind C-b
 set -g prefix C-a
@@ -139,10 +138,6 @@ set -g mode-mouse on
 #set -g mouse-resize-pane on
 set -g mouse-select-pane on
 #set -g mouse-select-window on
-
-# easier copy / pasting, uncomment in OSX
-# src: http://stackoverflow.com/a/12634260
-# bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
 EOF
 fi
 
