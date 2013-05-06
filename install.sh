@@ -2,35 +2,6 @@
 
 cd $HOME
 
-# 
-# Install VIM
-#
-if [ ! -e $HOME/.vim/backup ]; then
-    mkdir -p $HOME/.vim/backup
-fi
-
-if [ ! -e $HOME/.vim/bundle ]; then
-    mkdir -p $HOME/.vim/bundle
-fi
-
-if [ ! -e $HOME/.vim/tmp ]; then
-    mkdir -p $HOME/.vim/tmp
-fi
-
-echo "Replacing $HOME/.vimrc"
-echo "----------------------"
-curl -s https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
-
-if [ ! -e $HOME/.vim/bundle/vundle ]; then
-    echo "Installing Vundle"
-    echo "-----------------"
-    git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
-
-    # auto-fetch the bundle
-    vim +BundleInstall +qall
-fi
-
-
 if [ ! -e $HOME/.bash_aliases ]
 then
     echo Install Bash Aliases
@@ -152,4 +123,32 @@ if [ $(uname -a | grep Darwin) ]; then
 set-option -g default-command "reattach-to-user-namespace -l bash"
 EOF
     fi
+fi
+
+# 
+# Install VIM
+#
+if [ ! -e $HOME/.vim/backup ]; then
+    mkdir -p $HOME/.vim/backup
+fi
+
+if [ ! -e $HOME/.vim/bundle ]; then
+    mkdir -p $HOME/.vim/bundle
+fi
+
+if [ ! -e $HOME/.vim/tmp ]; then
+    mkdir -p $HOME/.vim/tmp
+fi
+echo "Replacing $HOME/.vimrc"
+echo "----------------------"
+curl -s https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
+
+if [ ! -e $HOME/.vim/bundle/vundle ]; then
+    echo "Installing Vundle"
+    echo "-----------------"
+    git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+
+    # auto-fetch the bundle
+    # this can blow up the whole install ... so leave it last (hacky)
+    vim +BundleInstall +qall
 fi
