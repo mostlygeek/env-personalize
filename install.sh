@@ -2,12 +2,14 @@
 
 cd $HOME
 
-if [ ! -e $HOME/.bash_aliases ]
-then
-    echo Install Bash Aliases
-    echo --------------------
+echo "Update Bash Aliases (Core)"
+echo "---------------------------"
 
-    cat << "EOF" > $HOME/.bash_aliases
+# Core aliases are sync'd up to this script
+# localized and customized aliases will still go into 
+# the usual ~/.bash_aliases
+
+cat << "EOF" > $HOME/.bash_aliases_core
 alias a='clear; cat ~/.bash_aliases'
 alias ea='vi ~/.bash_aliases; echo "Refreshing..."; source ~/.bash_aliases'
 alias r='source ~/.bash_aliases'
@@ -40,20 +42,22 @@ alias aa='alias | grep -e "alias g[0-9]"|grep -v "alias m"|sed "s/alias //"'
 touch ~/.bookmarks
 source ~/.bookmarks
 EOF
-fi
 
-source $HOME/.bash_aliases
+source $HOME/.bash_aliases_core
 
-if [ $(grep "source ~/.bash_aliases" $HOME/.bash_profile | wc -l) -eq 0 ]; then
-    echo "Adding sourcing of ~/.bash_aliases"
-    echo "----------------------------------"
+for file in "~/.bash_aliases" "~/.bash_aliases_core"
+do
+    if [ $(grep "source $file" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+        echo "Adding sourcing of $file"
+        echo "---------------------------------------"
 
-    cat << "EOF" >> $HOME/.bash_profile
-if [ -e ~/.bash_aliases ]; then
-    source ~/.bash_aliases
+        cat << EOF >> $HOME/.bash_profile
+if [ -e $file ]; then
+    source $file
 fi
 EOF
-fi
+    fi
+done
 
 if [ $(grep "EDITOR=vim" $HOME/.bash_profile | wc -l) -eq 0 ]; then
     echo "EDITOR=vim" >> $HOME/.bash_profile
@@ -64,9 +68,7 @@ if [ $(grep "VISUAL=vim" $HOME/.bash_profile | wc -l) -eq 0 ]; then
     echo "export VISUAL" >> $HOME/.bash_profile
 fi
 
-
 if [ ! -e $HOME/.tmux.conf ]; then
-
     cat << "EOF" > $HOME/.tmux.conf
 # NOTE!! 
 #
@@ -115,8 +117,8 @@ set -g mouse-select-pane on
 EOF
 fi
 
-if [ $(uname -a | grep Darwin) ]; then 
-    if [ $(grep "reattach-to-user-namespace" $HOME/.tmux.conf | wc -l) -ne 0 ]; then
+if [ ! -z "$(uname -a | grep Darwin)" ]; then 
+    if [ -z "$(grep "reattach-to-user-namespace" $HOME/.tmux.conf)" ]; then
         echo "Installing OSX TMUX pbcopy hacks"
         echo "--------------------------------"
 
