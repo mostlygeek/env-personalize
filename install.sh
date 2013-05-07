@@ -2,35 +2,8 @@
 
 cd $HOME
 
-# 
-# Install VIM
-#
-if [ ! -e $HOME/.vim/backup ]; then
-    mkdir -p $HOME/.vim/backup
-fi
-
-if [ ! -e $HOME/.vim/bundle ]; then
-    mkdir -p $HOME/.vim/bundle
-fi
-
-if [ ! -e $HOME/.vim/tmp ]; then
-    mkdir -p $HOME/.vim/tmp
-fi
-
-# just replace it every time
-curl https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
-
-if [ ! -e $HOME/.vim/bundle/vundle ]; then
-    echo "Installing Vundle"
-    echo "-----------------"
-    git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
-
-    # auto-fetch the bundle
-    vim +BundleInstall +qall
-fi
-
-
-if [ ! -e $HOME/.bash_aliases ]; then
+if [ ! -e $HOME/.bash_aliases ]
+then
     echo Install Bash Aliases
     echo --------------------
 
@@ -71,6 +44,27 @@ fi
 
 source $HOME/.bash_aliases
 
+if [ $(grep "source ~/.bash_aliases" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+    echo "Adding sourcing of ~/.bash_aliases"
+    echo "----------------------------------"
+
+    cat << "EOF" >> $HOME/.bash_profile
+if [ -e ~/.bash_aliases ]; then
+    source ~/.bash_aliases
+fi
+EOF
+fi
+
+if [ $(grep "EDITOR=vim" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+    echo "EDITOR=vim" >> $HOME/.bash_profile
+    echo "export EDITOR" >> $HOME/.bash_profile
+fi
+if [ $(grep "VISUAL=vim" $HOME/.bash_profile | wc -l) -eq 0 ]; then
+    echo "VISUAL=vim" >> $HOME/.bash_profile
+    echo "export VISUAL" >> $HOME/.bash_profile
+fi
+
+
 if [ ! -e $HOME/.tmux.conf ]; then
 
     cat << "EOF" > $HOME/.tmux.conf
@@ -80,10 +74,6 @@ if [ ! -e $HOME/.tmux.conf ]; then
 #
 # :source-file $HOME/.tmux.conf
 #
-
-# fix for broken pbcopy in tmux
-# see: http://superuser.com/questions/231130/unable-to-use-pbcopy-while-in-tmux-session
-set-option -g default-command "reattach-to-user-namespace -l bash"
  
 unbind C-b
 set -g prefix C-a
@@ -122,8 +112,46 @@ set -g mode-mouse on
 #set -g mouse-resize-pane on
 set -g mouse-select-pane on
 #set -g mouse-select-window on
-
-# easier copy / pasting
-# src: http://stackoverflow.com/a/12634260
-bind y run-shell "reattach-to-user-namespace -l zsh -c 'tmux show-buffer | pbcopy'"
 EOF
+fi
+
+if [ $(uname -a | grep Darwin) ]; then 
+    if [ $(grep "reattach-to-user-namespace" $HOME/.tmux.conf | wc -l) -ne 0 ]; then
+        echo "Installing OSX TMUX pbcopy hacks"
+        echo "--------------------------------"
+
+        cat << "EOF" >> $HOME/.tmux.conf
+# fix for broken pbcopy in tmux
+# see: http://superuser.com/questions/231130/unable-to-use-pbcopy-while-in-tmux-session
+set-option -g default-command "reattach-to-user-namespace -l bash"
+EOF
+    fi
+fi
+
+# 
+# Install VIM
+#
+if [ ! -e $HOME/.vim/backup ]; then
+    mkdir -p $HOME/.vim/backup
+fi
+
+if [ ! -e $HOME/.vim/bundle ]; then
+    mkdir -p $HOME/.vim/bundle
+fi
+
+if [ ! -e $HOME/.vim/tmp ]; then
+    mkdir -p $HOME/.vim/tmp
+fi
+echo "Replacing $HOME/.vimrc"
+echo "----------------------"
+curl -s https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
+
+if [ ! -e $HOME/.vim/bundle/vundle ]; then
+    echo "Installing Vundle"
+    echo "-----------------"
+    git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+
+    # auto-fetch the bundle
+    # this can blow up the whole install ... so leave it last (hacky)
+    vim +BundleInstall +qall
+fi
