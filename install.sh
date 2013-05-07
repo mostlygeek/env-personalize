@@ -39,6 +39,9 @@ alias a='clear; cat ~/.bash_aliases'
 alias ea='vi ~/.bash_aliases; echo "Refreshing..."; source ~/.bash_aliases'
 alias r='source ~/.bash_aliases'
 
+# Update environment settings
+alias update-env='curl https://raw.github.com/mostlygeek/env-personalize/master/install.sh | sh'
+
 # httpie: https://github.com/jkbr/httpie
 alias http='/usr/local/share/python/http'
 
