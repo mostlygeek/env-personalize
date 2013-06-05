@@ -171,3 +171,9 @@ if [ ! -e $HOME/.vim/bundle/vundle ]; then
     # this can blow up the whole install ... so leave it last (hacky)
     vim +BundleInstall +qall
 fi
+
+# personalize git
+git config --global user.name "Benson Wong"
+
+# does this really prevent spam?
+git config --global user.email "mostlygeek+git@gmail.com"
