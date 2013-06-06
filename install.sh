@@ -45,6 +45,19 @@ alias mdump='alias|grep -e "alias g[0-9]"|grep -v "alias m" > ~/.bookmarks'
 alias aa='alias | grep -e "alias g[0-9]"|grep -v "alias m"|sed "s/alias //"'
 touch ~/.bookmarks
 source ~/.bookmarks
+
+# SSH
+function sshretry {
+    while true; do
+        ssh -C -v -o ConnectTimeout=1 \
+             -o ServerAliveCountMax=3 \
+             -o ServerAliveInterval=1 \
+            "$@"
+
+        echo -n "Reconnect in:"
+        for c in 3 2 1; do echo -n " $c"; sleep 1; done;
+    done
+}
 EOF
 
 source $HOME/.bash_aliases_core
