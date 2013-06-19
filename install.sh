@@ -158,6 +158,15 @@ EOF
 fi
 
 # 
+# Personalize GIt
+#
+git config --global user.name "Benson Wong"
+
+# does this really prevent spam?
+git config --global user.email "mostlygeek+git@gmail.com"
+
+
+# 
 # Install VIM
 #
 if [ ! -e $HOME/.vim/backup ]; then
@@ -185,8 +194,3 @@ if [ ! -e $HOME/.vim/bundle/vundle ]; then
     vim +BundleInstall +qall
 fi
 
-# personalize git
-git config --global user.name "Benson Wong"
-
-# does this really prevent spam?
-git config --global user.email "mostlygeek+git@gmail.com"
