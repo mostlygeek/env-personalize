@@ -126,6 +126,9 @@ bind - split-window -v
 # set default colors
 set -g default-terminal "screen-256color"
 
+# bind ctrl+k (no prefix required) to clear scrollback
+bind -n C-k clear-history
+
 # Set vi mode
 # http://blog.sanctum.geek.nz/vi-mode-in-tmux/
 set-window-option -g mode-keys vi
@@ -154,6 +157,9 @@ if [ ! -z "$(uname -a | grep Darwin)" ]; then
 # fix for broken pbcopy in tmux
 # see: http://superuser.com/questions/231130/unable-to-use-pbcopy-while-in-tmux-session
 set-option -g default-command "reattach-to-user-namespace -l bash"
+
+# use C-a y to copy everything into the osx pasteboard
+bind y run-shell "reattach-to-user-namespace -l bash -c 'tmux show-buffer | pbcopy'"
 EOF
 fi
 
