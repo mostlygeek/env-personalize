@@ -164,15 +164,6 @@ EOF
 fi
 
 # 
-# Personalize GIt
-#
-git config --global user.name "Benson Wong"
-
-# does this really prevent spam?
-git config --global user.email "mostlygeek+git@gmail.com"
-
-
-# 
 # Install VIM
 #
 if [ ! -e $HOME/.vim/backup ]; then
@@ -207,4 +198,4 @@ git config --global user.name "Benson Wong"
 git config --global user.email "mostlygeek+git@gmail.com"
 
 # push current branch to upstream only. Avoids nastiness of git push -f
-git config --global push.default upstream
+git config --global push.default current
