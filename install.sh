@@ -163,6 +163,15 @@ bind y run-shell "reattach-to-user-namespace -l bash -c 'tmux show-buffer | pbco
 EOF
 fi
 
+# personalize git
+git config --global user.name "Benson Wong"
+
+# does this really prevent spam?
+git config --global user.email "mostlygeek+git@gmail.com"
+
+# push current branch to upstream only. Avoids nastiness of git push -f
+git config --global push.default current
+
 # 
 # Install VIM
 #
@@ -191,11 +200,3 @@ if [ ! -e $HOME/.vim/bundle/vundle ]; then
     vim +BundleInstall +qall
 fi
 
-# personalize git
-git config --global user.name "Benson Wong"
-
-# does this really prevent spam?
-git config --global user.email "mostlygeek+git@gmail.com"
-
-# push current branch to upstream only. Avoids nastiness of git push -f
-git config --global push.default current
