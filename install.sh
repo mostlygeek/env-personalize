@@ -188,7 +188,7 @@ if [ ! -e $HOME/.vim/tmp ]; then
 fi
 echo "Replacing $HOME/.vimrc"
 echo "----------------------"
-curl -s https://raw.github.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
+curl -s https://raw.githubusercontent.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
 
 if [ ! -e $HOME/.vim/bundle/vundle ]; then
     echo "Installing Vundle"
