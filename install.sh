@@ -116,6 +116,7 @@ bind -n M-Down select-pane -D
 # set status bar color
 set -g status-bg blue
 set -g status-fg white
+set-option -g allow-rename off
 set-window-option -g window-status-current-bg red
 
 # make it easier to split window
