@@ -191,7 +191,12 @@ echo "Replacing $HOME/.vimrc"
 echo "----------------------"
 curl -s https://raw.githubusercontent.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
 
-if [ ! -e $HOME/.vim/autoload/plug.cim ]; then
+if [ ! -e $HOME/.vim/autoload/plug.vim ]; then
+
+    if [ ! -e $HOME/.vim/autoload ]; then
+        mkdir -p ~/.vim/autoload
+    fi
+
     echo "Installing vim-plug"
     echo "-----------------"
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
