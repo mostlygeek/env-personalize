@@ -204,6 +204,6 @@ if [ ! -e $HOME/.vim/autoload/plug.vim ]; then
 
     # auto-fetch the bundle
     # this can blow up the whole install ... so leave it last (hacky)
-    vim +PluginInstall
+    vim +PlugInstall
 fi
 
