@@ -2,7 +2,7 @@ Quick / Dirty personalization of a shell env
 
 Installation:
 
-`curl https://raw.github.com/mostlygeek/env-personalize/master/install.sh | sh`
+`curl https://raw.githubusercontent.com/mostlygeek/env-personalize/master/install.sh | sh`
 
 or 
 
