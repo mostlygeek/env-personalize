@@ -191,13 +191,14 @@ echo "Replacing $HOME/.vimrc"
 echo "----------------------"
 curl -s https://raw.githubusercontent.com/mostlygeek/vim-personalize/master/vimrc -o $HOME/.vimrc
 
-if [ ! -e $HOME/.vim/bundle/vundle ]; then
-    echo "Installing Vundle"
+if [ ! -e $HOME/.vim/autoload/plug.cim ]; then
+    echo "Installing vim-plug"
     echo "-----------------"
-    git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     # auto-fetch the bundle
     # this can blow up the whole install ... so leave it last (hacky)
-    vim +BundleInstall +qall
+    vim +PluginInstall
 fi
 
