@@ -24,7 +24,7 @@ alias update-env='curl https://raw.github.com/mostlygeek/env-personalize/master/
 # Git
 alias gs="git status"
 alias gb="git branch"
-alias gb="git push"
+alias gp="git push"
 alias gcleanup="git clean -fdx ."
 EOF
 
